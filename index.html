@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T.M.C. - Condensador Molecular Troposférico | Solução para Mudanças Climáticas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        :root {
+            --cop-blue: #003366;
+            --cop-green: #00A651;
+            --cop-light-blue: #005A87;
+            --cop-aqua: #8ADBC4;
+            --cop-ice: #E5F2F9;
+            --white: #FFFFFF;
+            --light-gray: #F5F5F5;
+            --medium-gray: #999999;
+            --dark-gray: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            color: var(--cop-blue);
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--cop-blue);
+            color: var(--white);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid var(--cop-green);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo img {
+            height: 50px;
+            filter: brightness(0) invert(1);
+        }
+        
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.2rem;
+        }
+        
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            color: var(--cop-aqua);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+        
+        nav a:hover {
+            color: var(--cop-aqua);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--cop-green);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.9)), url('https://images.unsplash.com/photo-1604537466573-5e94508fd243?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80') no-repeat center center/cover;
+            color: white;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            color: var(--white);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            color: var(--cop-aqua);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2.2rem;
+            background-color: var(--cop-green);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn:hover {
+            background-color: var(--cop-light-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--cop-aqua);
+            margin-left: 1rem;
+            color: var(--cop-aqua);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(138, 219, 196, 0.1);
+            color: white;
+        }
+        
+        /* General Section Styling */
+        section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.3rem;
+            color: var(--cop-blue);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--cop-green);
+        }
+        
+        .section-title p {
+            color: var(--medium-gray);
+            max-width: 700px;
+            margin: 1.5rem auto 0;
+            font-size: 1.1rem;
+        }
+        
+        /* Problem Section */
+        .problem {
+            background-color: var(--cop-blue);
+            color: white;
+            padding: 5rem 0;
+            position: relative;
+        }
+        
+        .map-container {
+            position: relative;
+            margin-top: 3rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .map-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,51,102,0.8);
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.8rem;
+            color: var(--cop-light-blue);
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--dark-gray);
+        }
+        
+        /* Features List */
+        .features-list {
+            margin: 2rem 0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+        
+        .feature-item i {
+            color: var(--cop-green);
+            font-size: 1.2rem;
+            width: 30px;
+            text-align: center;
+        }
+        
+        .about-image {
+            flex: 1;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        /* Stats Section */
+        .stats {
+            background-color: var(--cop-blue);
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stats::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.un.org/sites/un2.un.org/files/2021/10/cop26_logo_white.png') no-repeat;
+            background-position: right -100px center;
+            background-size: 400px;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+            position: relative;
+        }
+        
+        .stat-item {
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--cop-green);
+            font-family: 'Courier New', monospace;
+        }
+        
+        .stat-text {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* Features Section */
+        .features {
+            background-color: var(--light-gray);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .feature-card {
+            background-color: var(--white);
+            padding: 2.5rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+            border-top: 4px solid var(--cop-green);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--cop-green);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--cop-blue);
+        }
+        
+        .feature-card p {
+            color: var(--medium-gray);
+        }
+        
+        /* Technology Section */
+        .technology {
+            background-color: var(--white);
+        }
+        
+        .tabs {
+            margin-top: 2.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .tab-header {
+            display: flex;
+            border-bottom: 2px solid var(--light-gray);
+            background-color: var(--light-gray);
+        }
+        
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--medium-gray);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .tab-btn.active {
+            color: var(--cop-blue);
+            border-bottom-color: var(--cop-green);
+            background-color: var(--white);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 2.5rem;
+            background-color: var(--white);
+            border-radius: 0 0 8px 8px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .tech-steps {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .tech-steps::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 30px;
+            height: 100%;
+            width: 3px;
+            background-color: var(--cop-ice);
+        }
+        
+        .step {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 3rem;
+        }
+        
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 60px;
+            height: 60px;
+            background-color: var(--cop-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: 3px solid var(--cop-green);
+        }
+        
+        .step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--cop-light-blue);
+        }
+        
+        .step p {
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+        }
+        
+        /* Results Section */
+        .results {
+            background-color: var(--light-gray);
+            padding: 5rem 0;
+        }
+        
+        .results-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .result-item {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .result-graph {
+            height: 200px;
+            margin: 1rem 0;
+            background-color: var(--light-gray);
+            border-radius: 4px;
+        }
+        
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .before-after img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .before-after p {
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        
+        .impact-text {
+            font-weight: 500;
+            color: var(--cop-green);
+            text-align: center;
+        }
+        
+        /* Simulator Section */
+        #simulator {
+            background-color: var(--light-gray);
+        }
+
+        .simulator-container {
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--cop-green);
+        }
+
+        .simulator-container .form-label {
+            font-weight: 500;
+            color: var(--cop-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .simulator-container .form-control,
+        .simulator-container .form-select {
+            background-color: var(--light-gray);
+            border: 1px solid #ddd;
+            color: var(--dark-gray);
+        }
+        .simulator-container .form-control:focus,
+        .simulator-container .form-select:focus {
+            border-color: var(--cop-green);
+            box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.2);
+            background-color: var(--white);
+        }
+
+        .simulator-container .btn-primary {
+            background-color: var(--cop-green);
+            border-color: var(--cop-green);
+            width: 100%;
+            padding: 0.8rem;
+            font-size: 1.1rem;
+        }
+        .simulator-container .btn-primary:hover {
+            background-color: #008a43;
+        }
+
+        #resultsCard {
+            background-color: var(--cop-ice);
+            border: 1px solid var(--cop-aqua);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: none; /* Initially hidden */
+        }
+        #resultsCard h5 {
+            color: var(--cop-blue);
+        }
+        #resultsCard .text-muted {
+            color: var(--cop-light-blue) !important;
+            font-size: 0.9rem;
+        }
+        #resultsCard h4 {
+            color: var(--cop-blue);
+            font-weight: 700;
+        }
+        #recommendation {
+            background-color: var(--cop-blue);
+            color: var(--white);
+            border: none;
+            font-size: 0.95rem;
+        }
+        #biomeMap {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .chart-container {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-top: 2rem;
+        }
+        .row {
+            --bs-gutter-x: 1.5rem;
+            --bs-gutter-y: 0;
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: calc(-1 * var(--bs-gutter-y));
+            margin-right: calc(-.5 * var(--bs-gutter-x));
+            margin-left: calc(-.5 * var(--bs-gutter-x));
+        }
+        .row > * {
+            flex-shrink: 0;
+            width: 100%;
+            max-width: 100%;
+            padding-right: calc(var(--bs-gutter-x) * .5);
+            padding-left: calc(var(--bs-gutter-x) * .5);
+            margin-top: var(--bs-gutter-y);
+        }
+        .col-md-6 {
+            flex: 0 0 auto;
+            width: 50%;
+        }
+        .mb-3 { margin-bottom: 1rem !important; }
+        .mb-4 { margin-bottom: 1.5rem !important; }
+        .mt-2 { margin-top: 0.5rem !important; }
+        
+        /* Team Section */
+        .team {
+            background-color: var(--white);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .team-member {
+            background-color: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--cop-green);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-image {
+            height: 320px;
+            overflow: hidden;
+        }
+        
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .member-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .member-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .member-info p.position {
+            color: var(--cop-green);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .member-info p.affiliation {
+            color: var(--cop-light-blue);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .member-info p.bio {
+            color: var(--medium-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--cop-blue);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--cop-green);
+            transform: translateY(-3px);
+        }
+        
+        /* Publications Section */
+        .publications {
+            padding: 5rem 0;
+            background-color: white;
+        }
+        
+        .publications-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .publication-item {
+            background-color: var(--light-gray);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .publication-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .pub-icon {
+            font-size: 2.5rem;
+            color: var(--cop-blue);
+            margin-bottom: 1rem;
+        }
+        
+        /* Contact Section */
+        .contact {
+            background-color: var(--light-gray);
+        }
+        
+        .contact-container {
+            display: flex;
+            gap: 3rem;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-form {
+            flex: 1;
+            background-color: var(--white);
+            padding: 3rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--cop-light-blue);
+        }
+        
+        .contact-info p {
+            margin-bottom: 2rem;
+            color: var(--dark-gray);
+        }
+        
+        .collaboration-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .collaboration-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .collaboration-list i {
+            color: var(--cop-green);
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-icon {
+            font-size: 1.5rem;
+            color: var(--cop-green);
+            margin-top: 0.3rem;
+        }
+        
+        .info-text h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .info-text p, .info-text a {
+            color: var(--medium-gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .info-text a:hover {
+            color: var(--cop-blue);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--cop-blue);
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--cop-green);
+            box-shadow: 0 0 0 3px rgba(0, 166, 81, 0.2);
+            outline: none;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--cop-blue);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--cop-green);
+        }
+        
+        .footer-column p {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--cop-aqua);
+            transform: translateX(5px);
+        }
+        
+        .footer-links i {
+            font-size: 0.8rem;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-bottom p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-text, .about-image {
+                flex: none;
+                width: 100%;
+            }
+            
+            .about-image {
+                margin-top: 2rem;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .results-content,
+            .publications-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .simulator-container .row, .chart-container .row {
+                flex-direction: column;
+            }
+            .col-md-6 {
+                width: 100%;
+            }
+            #biomeMap {
+                margin-bottom: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--cop-blue);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                transition: all 0.5s ease;
+            }
+            
+            nav ul.active {
+                left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .tab-header {
+                flex-wrap: wrap;
+            }
+            
+            .tab-btn {
+                flex: 1 0 auto;
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .btn-group {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .tab-content {
+                padding: 1.5rem;
+            }
+            
+            .contact-form {
+                padding: 2rem;
+            }
+            
+            .before-after {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .delay-1 {
+            transition-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            transition-delay: 0.4s;
+        }
+        
+        .delay-3 {
+            transition-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="https://api.iconify.design/mdi:weather-windy.svg?color=white" alt="TMC Logo">
+                    <div class="logo-text">
+                        <h1>T.M.C.</h1>
+                        <p>Condensador Molecular Troposférico</p>
+                    </div>
+                </div>
+                <nav>
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <ul id="navMenu">
+                        <li><a href="#home">Início</a></li>
+                        <li><a href="#problem">O Problema</a></li>
+                        <li><a href="#about">A Solução</a></li>
+                        <li><a href="#technology">Tecnologia</a></li>
+                        <li><a href="#results">Resultados</a></li>
+                        <li><a href="#team">Equipe</a></li>
+                        <li><a href="#publications">Publicações</a></li>
+                        <li><a href="#contact">Contato</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="fade-in">T.M.C.: Transformando o Ar em Água para Combater a Seca</h1>
+                <p class="fade-in delay-1">Sistema aerostático autônomo que captura vapor d'água da troposfera para recuperar ecossistemas e garantir segurança hídrica</p>
+                <div class="btn-group fade-in delay-2">
+                    <a href="#about" class="btn">Conheça o Projeto</a>
+                    <a href="#technology" class="btn btn-outline">Veja a Tecnologia</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem" id="problem">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="color: white;">A Crise Hídrica Global</h2>
+                <p style="color: rgba(255,255,255,0.8);">Dados alarmantes mostram a urgência de soluções inovadoras para a escassez de água</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item fade-in">
+                    <div class="stat-number">1.55°C</div>
+                    <div class="stat-text">Acima da média pré-industrial em 2024</div>
+                </div>
+                <div class="stat-item fade-in delay-1">
+                    <div class="stat-number">60%</div>
+                    <div class="stat-text">do território brasileiro afetado pela seca em 2024</div>
+                </div>
+                <div class="stat-item fade-in delay-2">
+                    <div class="stat-number">13T</div>
+                    <div class="stat-text">Toneladas de vapor d'água na atmosfera</div>
+                </div>
+            </div>
+            
+            <div class="map-container fade-in delay-3">
+                <img src="https://i.ibb.co/39TC09LT/seca.webp" alt="Mapa de áreas afetadas pela seca">
+                <div class="map-overlay">
+                    <p>Diante deste cenário, a busca por fontes alternativas de água não é uma opção, é uma necessidade. É aqui que o T.M.C. atua.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>A Solução T.M.C.</h2>
+                <p>Uma abordagem inovadora para a crise hídrica global</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Capturando água da atmosfera para regenerar ecossistemas</h3>
+                    <p>O T.M.C. propõe uma solução tecnológica para capturar vapor d'água na troposfera e distribuí-lo estrategicamente em regiões afetadas pela seca.</p>
+                    
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Operação em altitude (2-8km)</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-leaf"></i>
+                            <span>Aplicação direta na recuperação ecológica</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-thermometer-half"></i>
+                            <span>Adaptabilidade climática com placas de grafite</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-recycle"></i>
+                            <span>Materiais recicláveis e de baixo custo</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#technology" class="btn">Detalhes Técnicos</a>
+                </div>
+                <div class="about-image fade-in">
+                    <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="TMC Concept">
+                    <div class="image-caption">Diagrama conceitual do sistema T.M.C.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="color: white;">T.M.C. em Números</h2>
+                <p style="color: rgba(255,255,255,0.8);">Dados baseados em simulações computacionais e modelos termodinâmicos.</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item fade-in">
+                    <div class="stat-number">250-1000L</div>
+                    <div class="stat-text">Água coletada por dia</div>
+                </div>
+                <div class="stat-item fade-in delay-1">
+                    <div class="stat-number">2-8km</div>
+                    <div class="stat-text">Altitude operacional</div>
+                </div>
+                <div class="stat-item fade-in delay-2">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-text">Economia com mistura de gases</div>
+                </div>
+                <div class="stat-item fade-in delay-3">
+                    <div class="stat-number">100m²</div>
+                    <div class="stat-text">Área de influência por unidade</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Vantagens do T.M.C.</h2>
+                <p>O T.M.C. oferece diversas vantagens em comparação com outras tecnologias de captação de água atmosférica.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon"><i class="fas fa-cloud-rain"></i></div>
+                    <h3>Operação em Altitude</h3>
+                    <p>Acesso a massas de ar potencialmente mais úmidas e/ou com condições de temperatura mais favoráveis do que ao nível do solo.</p>
+                </div>
+                <div class="feature-card fade-in delay-1">
+                    <div class="feature-icon"><i class="fas fa-leaf"></i></div>
+                    <h3>Recuperação Ecológica</h3>
+                    <p>Design focado não apenas na coleta, mas na aplicação direta da água para restauração de ecossistemas degradados.</p>
+                </div>
+                <div class="feature-card fade-in delay-2">
+                    <div class="feature-icon"><i class="fas fa-sliders-h"></i></div>
+                    <h3>Adaptabilidade Climática</h3>
+                    <p>Sistema de placas de grafite oferece uma solução para operar em condições frias/secas, onde outras tecnologias falham.</p>
+                </div>
+                <div class="feature-card fade-in delay-3">
+                    <div class="feature-icon"><i class="fas fa-recycle"></i></div>
+                    <h3>Sustentabilidade</h3>
+                    <p>Materiais recicláveis e de baixo custo, com destinação ambientalmente adequada a resíduos sólidos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="technology" id="technology">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tecnologia e Funcionamento</h2>
+                <p>Conheça os componentes e o funcionamento do Tropospheric Molecular Condenser.</p>
+            </div>
+            <div class="tabs">
+                <div class="tab-header">
+                    <button class="tab-btn active" data-tab="components">Componentes</button>
+                    <button class="tab-btn" data-tab="operation">Operação</button>
+                    <button class="tab-btn" data-tab="materials">Materiais</button>
+                </div>
+                <div class="tab-content active" id="components-tab">
+                    <div class="tech-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h3>Estrutura de Captação</h3>
+                            <p>Malha de alta superfície específica projetada para maximizar a área de contato com o ar úmido, facilitando a condensação do vapor d'água.</p>
+                            <p>Material compósito com propriedades hidrofílicas e condutivas, otimizado para diferentes condições atmosféricas.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h3>Sistema de Resfriamento</h3>
+                            <p>Placas de grafite com alta condutividade térmica para transferência eficiente de calor, resfriando o ar e promovendo a condensação.</p>
+                            <p>Operação em modo passivo (diferença térmica natural) ou ativo (com auxílio de energia renovável).</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <h3>Coletor e Armazenamento</h3>
+                            <p>Sistema de gotejamento e canaletas que direcionam a água condensada para tanques de armazenamento térmicamente isolados.</p>
+                            <p>Filtragem e tratamento básico para garantir qualidade da água coletada.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="operation-tab">
+                    <div class="tech-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h3>Fase de Captação</h3>
+                            <p>O dispositivo é posicionado em altitude onde a umidade relativa e as condições de temperatura são mais favoráveis para a condensação.</p>
+                            <p>O ar úmido é direcionado através da malha de captação por correntes de vento naturais ou sistemas de ventilação auxiliar.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h3>Processo de Condensação</h3>
+                            <p>O contato do ar úmido com as superfícies resfriadas promove a mudança de fase do vapor d'água para líquido.</p>
+                            <p>Em condições de baixa umidade, as placas de grafite ativas aumentam a eficiência do processo.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <h3>Distribuição e Aplicação</h3>
+                            <p>A água coletada é armazenada e pode ser distribuída por gravidade ou sistemas de bombeamento de baixa pressão.</p>
+                            <p>Aplicação direta no solo para irrigação ou em sistemas de microaspersão para reflorestamento.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" id="materials-tab">
+                    <div class="tech-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h3>Materiais de Captação</h3>
+                            <p>Malha composta por fibras de polímeros modificados com grupos hidrofílicos e nanopartículas condutoras.</p>
+                            <p>Estrutura leve e resistente a intempéries, com revestimento anti-microbiano.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h3>Sistema Térmico</h3>
+                            <p>Placas de grafite expandido com alta condutividade térmica (1500-2000 W/mK).</p>
+                            <p>Estruturas de suporte em ligas de alumínio aeronáutico para resistência e leveza.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <h3>Componentes Estruturais</h3>
+                            <p>Estrutura principal em compósitos de fibra de carbono reciclada.</p>
+                            <p>Sistemas de fixação e ancoragem em aço inoxidável para durabilidade em ambientes agressivos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results" id="results">
+        <div class="container">
+            <div class="section-title">
+                <h2>Resultados e Impacto</h2>
+                <p>Dados das simulações e impacto potencial do projeto</p>
+            </div>
+            
+            <div class="results-content">
+                <div class="result-item fade-in">
+                    <h3>Eficiência de Captação</h3>
+                    <p>Simulações indicam capacidade de coleta entre 50-250 litros por dia, dependendo das condições atmosféricas.</p>
+                    <div class="result-graph" id="efficiencyChart"></div>
+                </div>
+                
+                <div class="result-item fade-in delay-1">
+                    <h3>Impacto Ecológico</h3>
+                    <div class="before-after">
+                        <div class="before">
+                            <img src="https://images.unsplash.com/photo-1509316785289-025f5b846b35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2076&q=80" alt="Área degradada">
+                            <p>Área degradada</p>
+                        </div>
+                        <div class="after">
+                            <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="Área recuperada">
+                            <p>Simulação após 5 anos com T.M.C.</p>
+                        </div>
+                    </div>
+                    <p class="impact-text">Previsão de aumento de 30-50% na cobertura vegetal na área de influência direta</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulator Section -->
+    <section id="simulator" class="simulator-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Simulador Interativo</h2>
+                <p>Calcule a eficiência de geração de água do T.M.C. com base em diferentes condições e biomas brasileiros.</p>
+            </div>
+            <div class="simulator-container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="biomeSelect" class="form-label">Bioma</label>
+                            <select class="form-select" id="biomeSelect">
+                                <option value="custom">Personalizado</option>
+                                <option value="amazonia">Amazônia</option>
+                                <option value="pantanal">Pantanal</option>
+                                <option value="semiarido">Caatinga (Semiárido)</option>
+                                <option value="cerrado">Cerrado</option>
+                                <option value="regiao_sul">Mata Atlântica</option>
+                            </select>
+                        </div>
+                        <div id="customParams">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="temperature" class="form-label">Temperatura (°C)</label>
+                                        <input type="number" class="form-control" id="temperature" value="25">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="humidity" class="form-label">Umidade Relativa (%)</label>
+                                        <input type="number" class="form-control" id="humidity" value="60">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="windSpeed" class="form-label">Velocidade do Vento (m/s)</label>
+                                <input type="number" class="form-control" id="windSpeed" value="3">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Modo de Operação</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="operationMode" id="passiveMode" value="passivo" checked>
+                                <label class="form-check-label" for="passiveMode">Passivo</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="operationMode" id="activeMode" value="ativo">
+                                <label class="form-check-label" for="activeMode">Ativo (com placas de grafite)</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="meshArea" class="form-label">Área da Malha (m²)</label>
+                            <input type="number" class="form-control" id="meshArea" value="100">
+                        </div>
+                        <button id="calculateBtn" class="btn btn-primary">Calcular</button>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="biomeMap" style="height: 300px; border-radius: 8px; margin-bottom: 20px;"></div>
+                        <div id="resultsCard">
+                            <h5 class="card-title">Resultados da Simulação</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-2"><small class="text-muted">Taxa Diária</small><h4 id="dailyRate">0 L/dia</h4></div>
+                                    <div class="mb-2"><small class="text-muted">Taxa Mensal</small><h4 id="monthlyRate">0 L/mês</h4></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-2"><small class="text-muted">Taxa Anual</small><h4 id="annualRate">0 L/ano</h4></div>
+                                    <div class="mb-2"><small class="text-muted">Eficiência</small><h4 id="efficiency">-</h4></div>
+                                </div>
+                            </div>
+                            <div class="alert alert-dark mt-2" id="recommendation">Selecione um bioma ou insira parâmetros.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h4>Sensibilidade à Temperatura</h4>
+                            <div id="tempSensitivityChart" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h4>Comparação entre Biomas</h4>
+                            <div id="biomeComparisonChart" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team" id="team">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nossa Equipe</h2>
+                <p>Conheça os pesquisadores por trás do desenvolvimento do T.M.C.</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member fade-in">
+                    <div class="member-image">
+                        <img src="https://i.ibb.co/W4RmSVxk/Erick.gif" alt="Erick Carvalho Matuck">
+                    </div>
+                    <div class="member-info">
+                        <h3>Erick Carvalho Matuck</h3>
+                        <p class="position">Pesquisador Principal</p>
+                        <p class="affiliation">Graduando em Direito - FDSM</p>
+                        <p class="bio">Diretor Financeiro e Presidente do Comitê da COP no projeto SINUPA. Desenvolve pesquisa sobre Direitos Humanos e integra o grupo "Direitos Humanos: Migração e Refúgio".</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-researchgate"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-member fade-in delay-1">
+                    <div class="member-image">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Prof. João Edson Costa Ferreira da Silva">
+                    </div>
+                    <div class="member-info">
+                        <h3>Prof. João Edson Costa Ferreira da Silva</h3>
+                        <p class="position">Orientador</p>
+                        <p class="affiliation">Professor - IFMT</p>
+                        <p class="bio">Mestre em Meio Ambiente e Recursos Hídricos pela UNIFEI. Atua nas áreas de fotogrametria com ARP, GEOBIA e sensoriamento remoto aplicado a dados florestais.</p>
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-researchgate"></i></a>
+                            <a href="#"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section class="publications" id="publications">
+        <div class="container">
+            <div class="section-title">
+                <h2>Publicações e Mídia</h2>
+                <p>Material científico e notícias sobre o projeto T.M.C.</p>
+            </div>
+            
+            <div class="publications-grid">
+                <div class="publication-item fade-in">
+                    <div class="pub-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3>Trabalho Completo</h3>
+                    <p>Documento submetido ao 31º Prêmio Jovem Cientista</p>
+                    <a href="PJC_TMC.pdf" class="btn btn-outline" download>Download PDF</a>
+                </div>
+                
+                <div class="publication-item fade-in delay-1">
+                    <div class="pub-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <h3>Kit de Imprensa</h3>
+                    <p>Resumo do projeto, imagens e informações para jornalistas</p>
+                    <a href="#" class="btn btn-outline">Acessar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contato e Próximos Passos</h2>
+                <p>Estamos buscando parceiros para a construção do primeiro protótipo funcional</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Junte-se a Nós</h3>
+                    <p>O T.M.C. está em fase de desenvolvimento avançado e buscamos colaborações com:</p>
+                    <ul class="collaboration-list">
+                        <li><i class="fas fa-check"></i> Instituições de pesquisa</li>
+                        <li><i class="fas fa-check"></i> Empresas de tecnologia sustentável</li>
+                        <li><i class="fas fa-check"></i> Órgãos governamentais</li>
+                        <li><i class="fas fa-check"></i> Investidores em soluções climáticas</li>
+                    </ul>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-text">
+                            <h4>Email</h4>
+                            <a href="mailto:contato@tmcproject.org">contato@tmcproject.org</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nome</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Tipo de Colaboração</label>
+                            <select id="subject" name="subject">
+                                <option value="research">Pesquisa</option>
+                                <option value="partnership">Parceria</option>
+                                <option value="investment">Investimento</option>
+                                <option value="media">Mídia</option>
+                                <option value="other">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mensagem</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Sobre o T.M.C.</h3>
+                    <p>O Tropospheric Molecular Condenser é uma solução tecnológica inovadora para os desafios hídricos das mudanças climáticas, desenvolvido por uma equipe multidisciplinar de pesquisadores brasileiros.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Início</a></li>
+                        <li><a href="#problem"><i class="fas fa-chevron-right"></i> O Problema</a></li>
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> A Solução</a></li>
+                        <li><a href="#technology"><i class="fas fa-chevron-right"></i> Tecnologia</a></li>
+                        <li><a href="#results"><i class="fas fa-chevron-right"></i> Resultados</a></li>
+                        <li><a href="#team"><i class="fas fa-chevron-right"></i> Equipe</a></li>
+                        <li><a href="#publications"><i class="fas fa-chevron-right"></i> Publicações</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Recursos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Publicações</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Dados Técnicos</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Termos de Uso</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Política de Privacidade</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Conecte-se</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                        <li><a href="#"><i class="fab fa-researchgate"></i> ResearchGate</a></li>
+                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 T.M.C. Project. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- SCRIPT COMBINADO ---
+
+        // 1. LÓGICA DO SITE PRINCIPAL (MENU, SCROLL, ANIMAÇÕES, ETC.)
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navMenu.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Smooth Scrolling for Anchor Links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (this.getAttribute('href') === '#') return;
+                    
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        if (navMenu.classList.contains('active')) {
+                            navMenu.classList.remove('active');
+                            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                        }
+                    }
+                });
+            });
+            
+            // Tab Functionality
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    const tabId = btn.getAttribute('data-tab') + '-tab';
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Scroll Animation
+            const fadeElements = document.querySelectorAll('.fade-in');
+            const checkScroll = () => {
+                fadeElements.forEach(element => {
+                    if (element.getBoundingClientRect().top < window.innerHeight - 100) {
+                        element.classList.add('active');
+                    }
+                });
+            };
+            checkScroll();
+            window.addEventListener('scroll', checkScroll);
+
+            // Render efficiency chart in results section
+            renderEfficiencyChart();
+
+            // 2. LÓGICA DA CALCULADORA
+            initializeSimulator();
+        });
+
+        function renderEfficiencyChart() {
+            const trace = {
+                x: ['Amazônia', 'Pantanal', 'Caatinga', 'Cerrado', 'Mata Atlântica'],
+                y: [220, 180, 90, 150, 200],
+                type: 'bar',
+                marker: {
+                    color: ['#1b9e77', '#66a61e', '#d95f02', '#7570b3', '#e7298a']
+                }
+            };
+            
+            const layout = {
+                title: 'Produção de Água por Bioma (L/dia)',
+                xaxis: {title: 'Bioma'},
+                yaxis: {title: 'Litros por dia'},
+                margin: {t: 40, b: 40, l: 50, r: 20}
+            };
+            
+            Plotly.newPlot('efficiencyChart', [trace], layout, {responsive: true, displayModeBar: false});
+        }
+
+        // 3. FUNÇÕES DO SIMULADOR
+        function initializeSimulator() {
+            const biomeData = {
+                amazonia: { temp: 28.0, humid: 85.0, wind: 3.0, biome: "Amazônia", color: "#1b9e77" },
+                pantanal: { temp: 30.0, humid: 75.0, wind: 4.0, biome: "Pantanal", color: "#66a61e" },
+                semiarido: { temp: 32.0, humid: 40.0, wind: 6.0, biome: "Caatinga", color: "#d95f02" },
+                cerrado: { temp: 25.0, humid: 60.0, wind: 5.0, biome: "Cerrado", color: "#7570b3" },
+                regiao_sul: { temp: 18.0, humid: 78.0, wind: 7.0, biome: "Mata Atlântica", color: "#e7298a" }
+            };
+
+            const biomePolygons = {
+                "Amazônia": [{lon: -70, lat: -10}, {lon: -70, lat: 5}, {lon: -50, lat: 5}, {lon: -50, lat: -10}, {lon: -70, lat: -10}],
+                "Caatinga": [{lon: -45, lat: -15}, {lon: -45, lat: -5}, {lon: -35, lat: -5}, {lon: -35, lat: -15}, {lon: -45, lat: -15}],
+                "Cerrado": [{lon: -55, lat: -25}, {lon: -55, lat: -10}, {lon: -40, lat: -10}, {lon: -40, lat: -25}, {lon: -55, lat: -25}],
+                "Mata Atlântica": [{lon: -55, lat: -30}, {lon: -55, lat: -20}, {lon: -40, lat: -20}, {lon: -40, lat: -30}, {lon: -55, lat: -30}],
+                "Pantanal": [{lon: -60, lat: -20}, {lon: -60, lat: -15}, {lon: -55, lat: -15}, {lon: -55, lat: -20}, {lon: -60, lat: -20}]
+            };
+
+            renderBiomeMap('Amazônia');
+            renderTempSensitivityChart([]);
+            renderBiomeComparisonChart();
+
+            document.getElementById('biomeSelect').addEventListener('change', function() {
+                const selectedBiomeKey = this.value;
+                if (selectedBiomeKey !== 'custom') {
+                    const biome = biomeData[selectedBiomeKey];
+                    document.getElementById('temperature').value = biome.temp;
+                    document.getElementById('humidity').value = biome.humid;
+                    document.getElementById('windSpeed').value = biome.wind;
+                    renderBiomeMap(biome.biome);
+                }
+            });
+
+            document.getElementById('calculateBtn').addEventListener('click', calculateResults);
+
+            function calculateCondensation(temp, humidity, wind, mode, meshArea) {
+                let baseRate = (humidity / 100) * (temp / 25) * (wind / 4) * (meshArea / 100);
+                if (mode === 'ativo') baseRate *= 1.8;
+                if (temp < 15) baseRate *= (temp / 15);
+                if (humidity < 50) baseRate *= (humidity / 50);
+                const variation = 0.9 + Math.random() * 0.2;
+                return Math.max(0, baseRate * variation * 200);
+            }
+
+            function calculateResults() {
+                const biomeSelect = document.getElementById('biomeSelect');
+                const selectedBiomeKey = biomeSelect.value;
+                
+                let temp, humidity, wind;
+                if (selectedBiomeKey !== 'custom') {
+                    const biome = biomeData[selectedBiomeKey];
+                    temp = biome.temp;
+                    humidity = biome.humid;
+                    wind = biome.wind;
+                } else {
+                    temp = parseFloat(document.getElementById('temperature').value);
+                    humidity = parseFloat(document.getElementById('humidity').value);
+                    wind = parseFloat(document.getElementById('windSpeed').value);
+                }
+                
+                const mode = document.querySelector('input[name="operationMode"]:checked').value;
+                const meshArea = parseFloat(document.getElementById('meshArea').value);
+                
+                const dailyRate = calculateCondensation(temp, humidity, wind, mode, meshArea);
+                
+                let efficiency, recommendation;
+                if (dailyRate < 50) {
+                    efficiency = "Baixa";
+                    recommendation = "Modo ativo ou regiões mais úmidas são recomendados.";
+                } else if (dailyRate < 150) {
+                    efficiency = "Moderada";
+                    recommendation = "Eficiência aceitável. Otimize parâmetros para melhores resultados.";
+                } else {
+                    efficiency = "Alta";
+                    recommendation = "Excelente eficiência de coleta para as condições atuais.";
+                }
+                
+                document.getElementById('dailyRate').textContent = dailyRate.toFixed(1) + " L/dia";
+                document.getElementById('monthlyRate').textContent = (dailyRate * 30).toFixed(1) + " L/mês";
+                document.getElementById('annualRate').textContent = (dailyRate * 365).toFixed(1) + " L/ano";
+                document.getElementById('efficiency').textContent = efficiency;
+                document.getElementById('recommendation').textContent = recommendation;
+                document.getElementById('resultsCard').style.display = 'block';
+                
+                const sensitivityData = [];
+                for (let t = temp - 10; t <= temp + 10; t += 2) {
+                    sensitivityData.push({ temp: t, rate: calculateCondensation(t, humidity, wind, mode, meshArea) });
+                }
+                renderTempSensitivityChart(sensitivityData);
+                renderBiomeComparisonChart();
+            }
+
+            function renderBiomeMap(biomeName) {
+                const traces = [];
+                Object.entries(biomePolygons).forEach(([name, coords]) => {
+                    traces.push({
+                        type: 'scattergeo',
+                        mode: 'lines',
+                        lon: coords.map(c => c.lon),
+                        lat: coords.map(c => c.lat),
+                        fill: 'toself',
+                        fillcolor: biomeData[name.toLowerCase().replace(/ /g, '')]?.color || '#999',
+                        opacity: name === biomeName ? 0.8 : 0.2,
+                        line: { color: name === biomeName ? '#fff' : 'transparent', width: 2 },
+                        name: name
+                    });
+                });
+
+                const layout = {
+                    geo: {
+                        scope: 'south america', landcolor: '#ccc', showland: true,
+                        center: {lon: -55, lat: -15}, projection: { scale: 1.8 }
+                    },
+                    margin: {t: 0, b: 0, l: 0, r: 0}, paper_bgcolor: 'rgba(0,0,0,0)', showlegend: false
+                };
+                Plotly.newPlot('biomeMap', traces, layout, {responsive: true, displayModeBar: false});
+            }
+
+            function renderTempSensitivityChart(data) {
+                const trace = {
+                    x: data.map(d => d.temp), y: data.map(d => d.rate),
+                    type: 'scatter', mode: 'lines+markers',
+                    line: {color: 'var(--cop-green)', width: 3},
+                    marker: {size: 8, color: 'var(--cop-blue)'}
+                };
+                const layout = {
+                    xaxis: {title: 'Temperatura (°C)', gridcolor: '#eee'},
+                    yaxis: {title: 'Água Gerada (L/dia)', gridcolor: '#eee'},
+                    margin: {t: 20, b: 40, l: 50, r: 20}, paper_bgcolor: 'rgba(0,0,0,0)'
+                };
+                Plotly.newPlot('tempSensitivityChart', [trace], layout, {responsive: true, displayModeBar: false});
+            }
+
+            function renderBiomeComparisonChart() {
+                const rates = Object.entries(biomeData).map(([key, biome]) => ({
+                    name: biome.biome,
+                    rate: calculateCondensation(biome.temp, biome.humid, biome.wind, 'passivo', 100),
+                    color: biome.color
+                }));
+                const trace = {
+                    x: rates.map(b => b.name), y: rates.map(b => b.rate),
+                    type: 'bar', marker: { color: rates.map(b => b.color) }
+                };
+                const layout = {
+                    yaxis: {title: 'Água Gerada (L/dia)', gridcolor: '#eee'},
+                    margin: {t: 20, b: 40, l: 50, r: 20}, paper_bgcolor: 'rgba(0,0,0,0)'
+                };
+                Plotly.newPlot('biomeComparisonChart', [trace], layout, {responsive: true, displayModeBar: false});
+            }
+        }
+    </script>
+</body>
+</html>
